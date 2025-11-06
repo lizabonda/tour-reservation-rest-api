@@ -1,0 +1,103 @@
+package cz.cvut.fel.ear.projekt.model;
+
+import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.w3c.dom.Text;
+
+import java.util.Date;
+import java.util.List;
+
+@Entity
+public class Activity {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @NotNull
+    @Column(nullable = false)
+    String name;
+    @NotNull
+    @Column(nullable = false)
+    String Description;
+    @NotNull
+    @Column(nullable = false)
+    int duration;
+    @NotNull
+    @Column(nullable = false)
+    double price;
+    @NotNull
+    @Column(nullable = false)
+    Date start;
+    @NotNull
+    @Column(nullable = false)
+    Date end;
+
+    @ManyToMany(mappedBy="activities")
+    private List<Booking> bookings;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "name='" + name + '\'' +
+                ", duration=" + duration +
+                ", price=" + price +
+                ", start=" + start +
+                ", end=" + end +
+                '}';
+    }
+}
