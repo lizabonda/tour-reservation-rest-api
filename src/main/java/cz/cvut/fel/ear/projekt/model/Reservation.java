@@ -1,9 +1,10 @@
 package cz.cvut.fel.ear.projekt.model;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 @Entity
 public class Reservation {
     @Id
@@ -11,15 +12,15 @@ public class Reservation {
     private Long id;
     @NotNull
     @Column(nullable = false)
-    private Date startDate;
+    private LocalDateTime startDate;
     @NotNull
     @Column(nullable = false)
-    private Date endDate;
+    private LocalDateTime endDate;
     private double reservationPrice;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "accomodation_id", nullable = false)
-    private Accomodation accomodation;
+    private Accommodation accommodation;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "booking_id", nullable = false)
@@ -33,19 +34,19 @@ public class Reservation {
         this.id = id;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -57,12 +58,12 @@ public class Reservation {
         this.reservationPrice = reservationPrice;
     }
 
-    public Accomodation getAccomodation() {
-        return accomodation;
+    public Accommodation getAccomodation() {
+        return accommodation;
     }
 
-    public void setAccomodation(Accomodation accomodation) {
-        this.accomodation = accomodation;
+    public void setAccomodation(Accommodation accommodation) {
+        this.accommodation = accommodation;
     }
 
     public Booking getBooking() {
@@ -79,7 +80,7 @@ public class Reservation {
                 "startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", reservationPrice=" + reservationPrice +
-                ", accomodation=" + accomodation +
+                ", accomodation=" + accommodation +
                 '}';
     }
 }

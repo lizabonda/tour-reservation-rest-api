@@ -1,12 +1,13 @@
 package cz.cvut.fel.ear.projekt.model;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Accomodation {
+public class Accommodation {
     @Id
     @GeneratedValue
     private Long id;
@@ -24,9 +25,9 @@ public class Accomodation {
     @Column(nullable = false)
     private String roomType;
 
-    @NotNull
-    @Column(nullable = false)
-    private String start;
+//    @NotNull
+//    @Column(nullable = false)
+//    private String start;
 
 
     private int capacity;
@@ -35,8 +36,8 @@ public class Accomodation {
     @Enumerated(value=EnumType.STRING)
     private MealPlan mealPlan;
 
-    @OneToMany(mappedBy = "accomodation",orphanRemoval = true)
-    private List<Reservation> reservations;
+    @OneToMany(mappedBy = "accommodation",orphanRemoval = true)
+    private List<Reservation> reservations= new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -110,13 +111,13 @@ public class Accomodation {
         this.mealPlan = mealPlan;
     }
 
-    public String getStart() {
-        return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
-    }
+//    public String getStart() {
+//        return start;
+//    }
+//
+//    public void setStart(String start) {
+//        this.start = start;
+//    }
 
     public List<Reservation> getReservations() {
         return reservations;

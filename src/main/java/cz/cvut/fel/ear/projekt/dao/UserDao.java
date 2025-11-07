@@ -1,7 +1,6 @@
 package cz.cvut.fel.ear.projekt.dao;
 
-import cz.cvut.fel.ear.projekt.model.Accomodation;
-import cz.cvut.fel.ear.projekt.model.Tour;
+import cz.cvut.fel.ear.projekt.model.Accommodation;
 import cz.cvut.fel.ear.projekt.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,7 +16,7 @@ public class UserDao implements GenericDao<User> {
 
 
     @Override
-    public User find(Integer id) {
+    public User find(Long id) {
         Objects.requireNonNull(id);
         return em.find(User.class, id);
     }
@@ -28,7 +27,7 @@ public class UserDao implements GenericDao<User> {
     }
 
     @Override
-    public void persist(User entity) {
+    public void save(User entity) {
         Objects.requireNonNull(entity);
         em.persist(entity);
     }
@@ -46,7 +45,7 @@ public class UserDao implements GenericDao<User> {
             em.remove(entity);
             return;
         }
-        final Accomodation toRemove = em.find(Accomodation.class, entity.getId());
+        final User toRemove = em.find(User.class, entity.getId());
         if (toRemove != null) {
             em.remove(toRemove);
         }

@@ -1,7 +1,8 @@
 package cz.cvut.fel.ear.projekt.dao;
 
-import cz.cvut.fel.ear.projekt.model.Accomodation;
+import cz.cvut.fel.ear.projekt.model.Accommodation;
 import cz.cvut.fel.ear.projekt.model.Booking;
+import cz.cvut.fel.ear.projekt.model.Tour;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -15,7 +16,7 @@ public class BookingDao implements GenericDao<Booking> {
     protected EntityManager em;
 
     @Override
-    public Booking find(Integer id) {
+    public Booking find(Long id) {
         Objects.requireNonNull(id);
         return em.find(Booking.class, id);
     }
@@ -26,7 +27,7 @@ public class BookingDao implements GenericDao<Booking> {
     }
 
     @Override
-    public void persist(Booking entity) {
+    public void save(Booking entity) {
         Objects.requireNonNull(entity);
         em.persist(entity);
     }
@@ -44,9 +45,23 @@ public class BookingDao implements GenericDao<Booking> {
             em.remove(entity);
             return;
         }
-        final Accomodation toRemove = em.find(Accomodation.class, entity.getId());
+        final Booking toRemove = em.find(Booking.class, entity.getId());
         if (toRemove != null) {
             em.remove(toRemove);
         }
+    }
+
+    public int countPersonsByTour(Long tourId) {
+        Long count = em.createQuery(
+                        "SELECT COUNT(p) " +
+                                "FROM Booking b " +
+                                "JOIN b.persons p " +
+                                "WHERE b.tour.id = :tourId",
+                        Long.class
+                )
+                .setParameter("tourId", tourId)
+                .getSingleResult();
+
+        return count.intValue();
     }
 }

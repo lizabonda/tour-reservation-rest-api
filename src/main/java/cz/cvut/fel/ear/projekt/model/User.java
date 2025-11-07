@@ -1,12 +1,14 @@
 package cz.cvut.fel.ear.projekt.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
 
 @Entity
+@Table(name = "users")
 public class User extends Person {
     @NotNull
     @Column(nullable = false)
@@ -69,5 +71,16 @@ public class User extends Person {
                 "username='" + username + '\'' +
                 ", role=" + role +
                 '}';
+    }
+
+    public void validateAdult(){
+        LocalDate birthDate = getDateOfBirth();
+        if (birthDate == null) {
+            throw new IllegalArgumentException("Birth date is required");
+        }
+        int age = Period.between(birthDate, LocalDate.now()).getYears();
+        if (age < 18) {
+            throw new IllegalStateException("User must be at least 18 years old");
+        }
     }
 }
