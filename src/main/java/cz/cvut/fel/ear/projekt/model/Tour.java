@@ -1,9 +1,10 @@
 package cz.cvut.fel.ear.projekt.model;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,10 +20,10 @@ public class Tour {
     private String destination;
     @NotNull
     @Column(nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
     @NotNull
     @Column(nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
     @NotNull
     @Column(nullable = false)
     private String description;
@@ -33,13 +34,13 @@ public class Tour {
     @JoinTable(name="tour_accomodation",
     joinColumns = @JoinColumn(name = "tour_id", nullable = false),
     inverseJoinColumns = @JoinColumn(name = "accomodation_id", nullable = false))
-    private List<Accomodation> accomodations;
+    private List<Accommodation> accommodations;
 
     @OneToMany(mappedBy = "tour")
-    private List<Booking> bookings;
+    private List<Booking> bookings= new ArrayList<>();
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Trip> trips;
+    private List<Trip> trips= new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -65,19 +66,19 @@ public class Tour {
         this.destination = destination;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -97,12 +98,12 @@ public class Tour {
         this.capacity = capacity;
     }
 
-    public List<Accomodation> getAccomodations() {
-        return accomodations;
+    public List<Accommodation> getAccomodations() {
+        return accommodations;
     }
 
-    public void setAccomodations(List<Accomodation> accomodations) {
-        this.accomodations = accomodations;
+    public void setAccomodations(List<Accommodation> accommodations) {
+        this.accommodations = accommodations;
     }
 
     public double getPrice() {
@@ -138,5 +139,7 @@ public class Tour {
                 ", destination='" + destination + '\'' +
                 '}';
     }
+
+
 }
 

@@ -1,6 +1,6 @@
 package cz.cvut.fel.ear.projekt.dao;
 
-import cz.cvut.fel.ear.projekt.model.Accomodation;
+import cz.cvut.fel.ear.projekt.model.Accommodation;
 import cz.cvut.fel.ear.projekt.model.Tour;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ public class TourDao implements  GenericDao<Tour> {
     protected EntityManager em;
 
     @Override
-    public Tour find(Integer id) {
+    public Tour find(Long id) {
         Objects.requireNonNull(id);
         return em.find(Tour.class, id);
     }
@@ -26,7 +26,7 @@ public class TourDao implements  GenericDao<Tour> {
     }
 
     @Override
-    public void persist(Tour entity) {
+    public void save(Tour entity) {
         Objects.requireNonNull(entity);
         em.persist(entity);
     }
@@ -44,7 +44,7 @@ public class TourDao implements  GenericDao<Tour> {
             em.remove(entity);
             return;
         }
-        final Accomodation toRemove = em.find(Accomodation.class, entity.getId());
+        final Tour toRemove = em.find(Tour.class, entity.getId());
         if (toRemove != null) {
             em.remove(toRemove);
         }

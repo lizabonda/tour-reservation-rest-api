@@ -1,6 +1,6 @@
 package cz.cvut.fel.ear.projekt.dao;
 
-import cz.cvut.fel.ear.projekt.model.Accomodation;
+import cz.cvut.fel.ear.projekt.model.Accommodation;
 import cz.cvut.fel.ear.projekt.model.Reservation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ public class ReservationDao implements GenericDao<Reservation> {
     protected EntityManager em;
 
     @Override
-    public Reservation find(Integer id) {
+    public Reservation find(Long id) {
         Objects.requireNonNull(id);
         return em.find(Reservation.class, id);
     }
@@ -26,7 +26,7 @@ public class ReservationDao implements GenericDao<Reservation> {
     }
 
     @Override
-    public void persist(Reservation entity) {
+    public void save(Reservation entity) {
         Objects.requireNonNull(entity);
         em.persist(entity);
     }
@@ -44,7 +44,7 @@ public class ReservationDao implements GenericDao<Reservation> {
             em.remove(entity);
             return;
         }
-        final Accomodation toRemove = em.find(Accomodation.class, entity.getId());
+        final Reservation toRemove = em.find(Reservation.class, entity.getId());
         if (toRemove != null) {
             em.remove(toRemove);
         }

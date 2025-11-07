@@ -1,8 +1,9 @@
 package cz.cvut.fel.ear.projekt.model;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -18,10 +19,10 @@ public abstract class Person {
     private String lastName;
     @NotNull
     @Column(nullable = false)
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "booking_id", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "booking_id", nullable = true)
     private Booking booking;
 
     public Long getId() {
@@ -48,11 +49,11 @@ public abstract class Person {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

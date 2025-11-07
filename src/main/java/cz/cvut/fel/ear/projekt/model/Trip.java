@@ -1,7 +1,7 @@
 package cz.cvut.fel.ear.projekt.model;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 @Entity
@@ -19,10 +19,10 @@ public class Trip {
     @Column(nullable = false)
     LocalDateTime arriveAt;
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "from_location", nullable = false)
     String from;
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "to_location", nullable = false)
     String to;
     @Enumerated(value=EnumType.STRING)
     TransportType type;

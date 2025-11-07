@@ -8,22 +8,22 @@ import java.util.Objects;
 public interface GenericDao<T> {
 
 
-    T find(Integer id);
+    T find(Long id);
 
     List<T> findAll();
 
-    void persist(T entity);
+    void save(T entity);
 
     default void persist(Collection<T> entities) {
         Objects.requireNonNull(entities);
-        entities.forEach(this::persist);
+        entities.forEach(this::save);
     }
 
     T update(T entity);
 
     void remove(T entity);
 
-    default boolean exists(Integer id) {
+    default boolean exists(Long id) {
         return id != null && find(id) != null;
     }
 }

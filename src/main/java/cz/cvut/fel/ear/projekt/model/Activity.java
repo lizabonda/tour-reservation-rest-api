@@ -1,13 +1,14 @@
 package cz.cvut.fel.ear.projekt.model;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.w3c.dom.Text;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "activity")
 public class Activity {
     @Id
     @GeneratedValue
@@ -25,10 +26,10 @@ public class Activity {
     @Column(nullable = false)
     double price;
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "start_time", nullable = false)
     Date start;
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "end_time", nullable = false)
     Date end;
 
     @ManyToMany(mappedBy="activities")

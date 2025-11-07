@@ -1,51 +1,50 @@
 package cz.cvut.fel.ear.projekt.dao;
 
-import cz.cvut.fel.ear.projekt.model.Accomodation;
+import cz.cvut.fel.ear.projekt.model.Accommodation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 @Repository
-public class AccomodationDao implements GenericDao<Accomodation> {
+public class AccommodationDao implements GenericDao<Accommodation> {
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public Accomodation find(Integer id) {
+    public Accommodation find(Long id) {
         Objects.requireNonNull(id);
-        return em.find(Accomodation.class, id);
+        return em.find(Accommodation.class, id);
     }
 
     @Override
-    public List<Accomodation> findAll() {
-        return em.createQuery("SELECT a FROM Accomodation a", Accomodation.class).getResultList();
+    public List<Accommodation> findAll() {
+        return em.createQuery("SELECT a FROM Accommodation a", Accommodation.class).getResultList();
     }
 
     @Override
-    public void persist(Accomodation entity) {
+    public void save(Accommodation entity) {
         Objects.requireNonNull(entity);
         em.persist(entity);
 
     }
 
     @Override
-    public Accomodation update(Accomodation entity) {
+    public Accommodation update(Accommodation entity) {
         Objects.requireNonNull(entity);
         return em.merge(entity);
     }
 
     @Override
-    public void remove(Accomodation entity) {
+    public void remove(Accommodation entity) {
         Objects.requireNonNull(entity);
         if (em.contains(entity)) {
             em.remove(entity);
             return;
         }
-        final Accomodation toRemove = em.find(Accomodation.class, entity.getId());
+        final Accommodation toRemove = em.find(Accommodation.class, entity.getId());
         if (toRemove != null) {
             em.remove(toRemove);
         }
