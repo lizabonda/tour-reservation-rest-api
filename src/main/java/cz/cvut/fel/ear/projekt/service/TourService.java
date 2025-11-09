@@ -24,10 +24,11 @@ public class TourService {
         int capacity = tour.getCapacity();
         int occupied= bookingDao.countPersonsByTour(tour.getId());
 
-    if(requestedSize+occupied>capacity) {
-        throw new IllegalStateException(
-            "Tour capacity exceeded: capacity=" + capacity
-    );
-}
+        if(requestedSize+occupied>capacity) {
+            throw new IllegalStateException(
+                "Tour capacity exceeded: capacity=" + capacity
+        );
+        }
     }
+
 }

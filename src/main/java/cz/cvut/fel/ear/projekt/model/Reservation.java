@@ -19,7 +19,7 @@ public class Reservation {
     private double reservationPrice;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "accomodation_id", nullable = false)
+    @JoinColumn(name = "accommodation_id", nullable = false)
     private Accommodation accommodation;
 
     @ManyToOne(optional = false)

@@ -36,42 +36,17 @@ public class DemoRunner implements CommandLineRunner {
     @Transactional
     public void run(String... args) {
 
-        Tour tour = new Tour();
-        tour.setDescription("Demo Greece Tour");
-        tour.setTitle("Demo Tour");
-        tour.setPrice(500.0);
-        tour.setDestination("Greece");
-        tour.setCapacity(3);
-        tour.setStartDate(LocalDate.now().plusDays(50));
-        tour.setEndDate(LocalDate.now().plusDays(57));
-        tourDao.save(tour);
+        Tour tour = tourDao.find(1L);
 
-        Accommodation acc = new Accommodation();
-        acc.setName("Demo Hotel");
-        acc.setAddress("Demo Address");
-        acc.setCity("Prague");
-        acc.setRoomType("Single");
-        acc.setPricePerNight(100.0);
-        acc.setCapacity(2);
-        acc.setMealPlan(MealPlan.ALL_INCLUSIVE);
-        accommodationDao.save(acc);
+        Accommodation acc = accommodationDao.find(1L);
+
+        User user = userDao.find(1L);
 
         Reservation res = new Reservation();
         res.setStartDate(LocalDateTime.now().plusDays(50));
         res.setEndDate(LocalDateTime.now().plusDays(53));
         res.setReservationPrice(300.0);
         res.setAccomodation(acc);
-
-        User user = new User();
-        user.setFirstName("Alice");
-        user.setLastName("Demo");
-        user.setDateOfBirth(LocalDate.of(1995, 5, 5));
-        user.setUsername("alice");
-        user.setPassword("password");
-        user.setPhoneNumber("123456789");
-        user.setEmail("alice@example.com");
-        user.setRole(Role.CUSTOMER);
-        user.validateAdult();
 
         Booking booking = new Booking();
         booking.setTour(tour);
@@ -80,7 +55,7 @@ public class DemoRunner implements CommandLineRunner {
         List<Person> persons = new ArrayList<>();
         persons.add(user);
         booking.setPersons(persons);
-        user.setBooking(booking);
+        user.getBookings().add(booking);
 
         List<Reservation> reservations = new ArrayList<>();
         reservations.add(res);

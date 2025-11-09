@@ -32,8 +32,14 @@ public class Booking {
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations= new ArrayList<>();
 
-    @OneToMany(mappedBy = "booking")
-    private List<Person> persons= new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "booking_person",
+            joinColumns = @JoinColumn(name = "booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id")
+    )
+    private List<Person> persons = new ArrayList<>();
+
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "tour_id", nullable = false)

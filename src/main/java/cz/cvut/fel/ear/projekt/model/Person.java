@@ -5,9 +5,13 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Person {
+public class Person {
     @Id
     @GeneratedValue
     private Long id;
@@ -21,9 +25,8 @@ public abstract class Person {
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "booking_id", nullable = true)
-    private Booking booking;
+    @ManyToMany(mappedBy = "persons")
+    private List<Booking> bookings = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -57,12 +60,12 @@ public abstract class Person {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Booking getBooking() {
-        return booking;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setBooking(Booking booking) {
-        this.booking = booking;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     @Override
