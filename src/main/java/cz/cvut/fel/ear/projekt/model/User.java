@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "users")
+@DiscriminatorValue("1")
 public class User extends Person {
     @NotNull
     @Column(nullable = false)

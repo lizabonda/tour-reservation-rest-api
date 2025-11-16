@@ -4,8 +4,8 @@ VALUES (1, 'Demo Hotel', 'Prague', 'Demo Street 123', 4, 'Single', 2, 'ALL_INCLU
 INSERT INTO tour (id, title, description, destination, start_date, end_date, capacity, price)
 VALUES (1, 'Demo Greece Tour', 'Demo tour for testing', 'Greece', '2025-06-01', '2025-06-08', 3, 500.0);
 
-INSERT INTO person (id, first_name, last_name, date_of_birth)
-VALUES (1, 'Alice', 'Demo', '1995-05-05');
+INSERT INTO person (id, first_name, last_name, date_of_birth,PERSON_TYPE)
+VALUES (1, 'Alice', 'Demo', '1995-05-05',1);
 
 INSERT INTO users (id, username, password, phone_number, email, role)
 VALUES (1, 'alice', 'password', '123456789', 'alice@example.com', 'CUSTOMER');

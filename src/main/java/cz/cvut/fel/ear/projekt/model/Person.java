@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="PERSON_TYPE",
+        discriminatorType=DiscriminatorType.INTEGER)
 public class Person {
     @Id
     @GeneratedValue
