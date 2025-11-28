@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,7 @@ public class Booking {
     private LocalDate createdAt;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("startDate")
     private List<Reservation> reservations= new ArrayList<>();
 
     @ManyToMany
@@ -38,6 +38,7 @@ public class Booking {
             joinColumns = @JoinColumn(name = "booking_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
+    @OrderBy("firstName, lastName")
     private List<Person> persons = new ArrayList<>();
 
 
@@ -52,6 +53,7 @@ public class Booking {
     private List<Activity> activities;
 
     @OneToMany(mappedBy = "booking")
+    @OrderBy("date")
     private List<Payment> payments= new ArrayList<>();
 
 

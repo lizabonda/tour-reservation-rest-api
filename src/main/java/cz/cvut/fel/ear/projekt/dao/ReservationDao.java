@@ -6,6 +6,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,5 +50,13 @@ public class ReservationDao implements GenericDao<Reservation> {
         if (toRemove != null) {
             em.remove(toRemove);
         }
+    }
+
+    public List<Reservation> findIntersection(Long accommodationId, LocalDateTime from, LocalDateTime to) {
+        return em.createNamedQuery("Reservation.findIntersection", Reservation.class)
+                .setParameter("accommodationId", accommodationId)
+                .setParameter("from", from)
+                .setParameter("to", to)
+                .getResultList();
     }
 }

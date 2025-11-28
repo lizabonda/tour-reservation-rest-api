@@ -3,9 +3,18 @@ package cz.cvut.fel.ear.projekt.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedQuery(
+        name = "Reservation.findIntersection",
+        query = "SELECT r from Reservation r " +
+                "WHERE r.accommodation.id = :accommodationId " +
+                "AND r.endDate > :from " +
+                "AND r.startDate < :to " +
+                "ORDER BY r.startDate"
+)
 public class Reservation {
     @Id
     @GeneratedValue
