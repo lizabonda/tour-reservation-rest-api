@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedQuery(name = "Tour.findByDestinationAndStartDate", query = "SELECT t from Tour t WHERE t.destination=:destination AND t.startDate>=:date ORDER BY t.startDate")
 public class Tour {
     @Id
     @GeneratedValue
@@ -40,6 +41,7 @@ public class Tour {
     private List<Booking> bookings= new ArrayList<>();
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("departAt")
     private List<Trip> trips= new ArrayList<>();
 
     public Long getId() {
@@ -140,6 +142,10 @@ public class Tour {
                 '}';
     }
 
+    public void removeBooking(Booking booking) {
+        bookings.remove(booking);
+        booking.setTour(null);
+    }
 
 }
 

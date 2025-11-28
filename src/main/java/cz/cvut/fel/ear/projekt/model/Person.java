@@ -28,6 +28,7 @@ public class Person {
     private LocalDate dateOfBirth;
 
     @ManyToMany(mappedBy = "persons")
+    @OrderBy("createdAt")
     private List<Booking> bookings = new ArrayList<>();
 
     public Long getId() {

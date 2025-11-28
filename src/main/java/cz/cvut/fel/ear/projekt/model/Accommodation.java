@@ -25,11 +25,6 @@ public class Accommodation {
     @Column(nullable = false)
     private String roomType;
 
-//    @NotNull
-//    @Column(nullable = false)
-//    private String start;
-
-
     private int capacity;
     private double pricePerNight;
 
@@ -37,6 +32,7 @@ public class Accommodation {
     private MealPlan mealPlan;
 
     @OneToMany(mappedBy = "accommodation",orphanRemoval = true)
+    @OrderBy("startDate")
     private List<Reservation> reservations= new ArrayList<>();
 
     public Long getId() {
@@ -110,14 +106,6 @@ public class Accommodation {
     public void setMealPlan(MealPlan mealPlan) {
         this.mealPlan = mealPlan;
     }
-
-//    public String getStart() {
-//        return start;
-//    }
-//
-//    public void setStart(String start) {
-//        this.start = start;
-//    }
 
     public List<Reservation> getReservations() {
         return reservations;

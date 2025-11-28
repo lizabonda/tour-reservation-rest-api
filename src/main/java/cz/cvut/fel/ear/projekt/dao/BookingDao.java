@@ -2,11 +2,17 @@ package cz.cvut.fel.ear.projekt.dao;
 
 import cz.cvut.fel.ear.projekt.model.Accommodation;
 import cz.cvut.fel.ear.projekt.model.Booking;
+import cz.cvut.fel.ear.projekt.model.Booking_;
 import cz.cvut.fel.ear.projekt.model.Tour;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,5 +69,27 @@ public class BookingDao implements GenericDao<Booking> {
                 .getSingleResult();
 
         return count.intValue();
+    }
+
+    public List<Booking> findBookingsCreatedBetween(LocalDate fromDate, LocalDate toDate) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Booking> cq = cb.createQuery(Booking.class);
+        Root<Booking> booking = cq.from(Booking.class);
+
+        Predicate from = cb.greaterThanOrEqualTo(
+                booking.get(Booking_.createdAt),
+                fromDate
+        );
+
+        Predicate to = cb.lessThanOrEqualTo(
+                booking.get(Booking_.createdAt),
+                toDate
+        );
+
+        cq.select(booking)
+                .where(cb.and(from, to))
+                .orderBy(cb.asc(booking.get(Booking_.createdAt)));
+
+        return em.createQuery(cq).getResultList();
     }
 }
