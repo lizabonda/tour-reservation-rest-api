@@ -7,18 +7,19 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Locale;
 
 @Entity
 public class Booking {
-    private static final int EARLY_DAYS=45;
-    private static final int LASTMINUTE_DAYS=3;
-    private static final double LASTMINUTE_DAYS_DISCOUNT=0.15;
-    private static final double EARLY_DAYS_DISCOUNT=0.1;
-    private static final double ALL_INCLUSIVE_PERCENT=0.15;
+    private static final int EARLY_DAYS = 45;
+    private static final int LASTMINUTE_DAYS = 3;
+    private static final double LASTMINUTE_DAYS_DISCOUNT = 0.15;
+    private static final double EARLY_DAYS_DISCOUNT = 0.1;
+    private static final double ALL_INCLUSIVE_PERCENT = 0.15;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_seq")
+    @SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq", allocationSize = 1)
     private Long id;
 
     private int reservationNumber;
@@ -30,7 +31,7 @@ public class Booking {
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("startDate")
-    private List<Reservation> reservations= new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -47,16 +48,14 @@ public class Booking {
     private Tour tour;
 
     @ManyToMany
-    @JoinTable(name="booking_activity",
+    @JoinTable(name = "booking_activity",
             joinColumns = @JoinColumn(name = "booking_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "activity_id", nullable = false))
     private List<Activity> activities;
 
     @OneToMany(mappedBy = "booking")
     @OrderBy("date")
-    private List<Payment> payments= new ArrayList<>();
-
-
+    private List<Payment> payments = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -143,46 +142,45 @@ public class Booking {
     }
 
     public double accommodationPrice() {
-        double accomodation_price=0.0;
-        List<Reservation> reservations =getReservations();
+        double accomodation_price = 0.0;
+        List<Reservation> reservations = getReservations();
         for (Reservation reservation : reservations) {
-            accomodation_price+=reservation.getReservationPrice();
+            accomodation_price += reservation.getReservationPrice();
         }
         return accomodation_price;
     }
 
-        public double basePrice() {
-            return tourPrice() + accommodationPrice();
-        }
+    public double basePrice() {
+        return tourPrice() + accommodationPrice();
+    }
 
-    public double discount(){
+    public double discount() {
         Tour tour = getTour();
-        double basePrice=basePrice();
+        double basePrice = basePrice();
         long days = ChronoUnit.DAYS.between(getCreatedAt(), tour.getStartDate());
-        double discount=0.0;
-        if(days>=EARLY_DAYS){
-            double erly_discount = basePrice*EARLY_DAYS_DISCOUNT;
-            discount=erly_discount;
-        }
-        else if(days<=LASTMINUTE_DAYS){
-            double last_minute_discount = basePrice*LASTMINUTE_DAYS_DISCOUNT;
-            discount=last_minute_discount;
+        double discount = 0.0;
+        if (days >= EARLY_DAYS) {
+            double erly_discount = basePrice * EARLY_DAYS_DISCOUNT;
+            discount = erly_discount;
+        } else if (days <= LASTMINUTE_DAYS) {
+            double last_minute_discount = basePrice * LASTMINUTE_DAYS_DISCOUNT;
+            discount = last_minute_discount;
         }
         return discount;
     }
 
-    public double charge(){
-        double charge=0.0;
-        List<Reservation> reservations =getReservations();
+    public double charge() {
+        double charge = 0.0;
+        List<Reservation> reservations = getReservations();
         for (Reservation reservation : reservations) {
-            if(reservation.getAccomodation().getMealPlan()== MealPlan.ALL_INCLUSIVE){
-                charge+= reservation.getReservationPrice()*ALL_INCLUSIVE_PERCENT;
+            if (reservation.getAccommodation().getMealPlan() == MealPlan.ALL_INCLUSIVE) {
+                charge += reservation.getReservationPrice() * ALL_INCLUSIVE_PERCENT;
             }
         }
         return charge;
     }
 
-    public double totalPrice(){
+    public double totalPrice() {
         double base = basePrice();
         double discount = discount();
         double charge = charge();
@@ -221,17 +219,17 @@ public class Booking {
             );
         }
 
-        return """
-        -- Price breakdown for booking %d --
-        Tour price:                  %.2f
-        Accommodation price:         %.2f
-        Base price:                  base = tour + accommodation = %.2f = %.2f + %.2f
-        Days before tour start:      %d
-        %s
-        Extra charges (ALL_INCLUSIVE): %.2f
-        Final price:                 total = base - discount + charge
-                                    = %.2f - %.2f + %.2f = %.2f
-        """.formatted(
+        return String.format("""
+                -- Price breakdown for booking %s --
+                Tour price:                  %.2f
+                Accommodation price:         %.2f
+                Base price:                  base = tour + accommodation = %.2f = %.2f + %.2f
+                Days before tour start:      %d
+                %s
+                Extra charges (ALL_INCLUSIVE): %.2f
+                Final price:                 total = base - discount + charge
+                                            = %.2f - %.2f + %.2f = %.2f
+                """,
                 getId(),
                 tour,
                 acc,

@@ -3,8 +3,8 @@ package cz.cvut.fel.ear.projekt.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @NamedQuery(
@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 )
 public class Reservation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_seq")
+    @SequenceGenerator(name = "reservation_seq", sequenceName = "reservation_seq", allocationSize = 1)
     private Long id;
     @NotNull
     @Column(nullable = false)
@@ -67,11 +68,11 @@ public class Reservation {
         this.reservationPrice = reservationPrice;
     }
 
-    public Accommodation getAccomodation() {
+    public Accommodation getAccommodation() {
         return accommodation;
     }
 
-    public void setAccomodation(Accommodation accommodation) {
+    public void setAccommodation(Accommodation accommodation) {
         this.accommodation = accommodation;
     }
 
@@ -81,6 +82,14 @@ public class Reservation {
 
     public void setBooking(Booking booking) {
         this.booking = booking;
+    }
+
+    public void calculateReservationPrice() {
+        long nights = ChronoUnit.DAYS.between(startDate, endDate);
+        if (nights <= 0) {
+            throw new IllegalArgumentException("Reservation endDate must be after startDate");
+        }
+        setReservationPrice(accommodation.getPricePerNight() * nights);
     }
 
     @Override

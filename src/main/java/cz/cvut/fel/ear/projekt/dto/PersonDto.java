@@ -1,10 +1,9 @@
 package cz.cvut.fel.ear.projekt.dto;
 
-import cz.cvut.fel.ear.projekt.model.Accommodation;
-
-import java.util.List;
+import java.time.LocalDate;
 
 public record PersonDto(Long id,
                         String firstName,
-                        String lastName
+                        String lastName,
+                        LocalDate dateOfBirth
                         ) {}

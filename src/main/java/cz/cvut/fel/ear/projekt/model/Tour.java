@@ -100,11 +100,11 @@ public class Tour {
         this.capacity = capacity;
     }
 
-    public List<Accommodation> getAccomodations() {
+    public List<Accommodation> getAccommodations() {
         return accommodations;
     }
 
-    public void setAccomodations(List<Accommodation> accommodations) {
+    public void setAccommodations(List<Accommodation> accommodations) {
         this.accommodations = accommodations;
     }
 

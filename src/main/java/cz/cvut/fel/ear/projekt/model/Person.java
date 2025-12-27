@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -15,7 +14,8 @@ import java.util.ArrayList;
         discriminatorType=DiscriminatorType.INTEGER)
 public class Person {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_seq")
+    @SequenceGenerator(name = "person_seq", sequenceName = "person_seq", allocationSize = 1)
     private Long id;
     @NotNull
     @Column(nullable = false)

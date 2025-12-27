@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "2ffc6409-8389-4873-b84d-7e8e55d4bd5b",
+		"name": "EAR Projekt - BookingController",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "GET /api/bookings/{id} (existing id=1)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bookings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/bookings/{id} (non-existing → 404)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/999999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bookings",
+								"999999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/bookings (create)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tour\": {\n    \"id\": 1\n  },\n  \"persons\": [\n    {\n      \"id\": 1\n    }\n  ],\n  \"reservations\": [\n    {\n      \"startDate\": \"2025-01-04\",\n      \"endDate\": \"2025-01-06\",\n      \"reservationPrice\": 300.0,\n      \"accommodation\": {\n        \"id\": 1\n      }\n    }\n  ]\n}\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/bookings (create with NEW person)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": null,\n  \"reservationNumber\": null,\n  \"tour\": {\n    \"id\": 1\n  },\n  \"persons\": [\n    {\n      \"id\": null,\n      \"firstName\": \"Bob\",\n      \"lastName\": \"Created\",\n      \"dateOfBirth\": \"1990-01-01\"\n    }\n  ],\n  \"reservations\": [\n    {\n      \"id\": null,\n      \"startDate\": \"2025-06-04\",\n      \"endDate\": \"2025-06-06\",\n      \"reservationPrice\": 300.0,\n      \"accommodation\": {\n        \"id\": 1\n      },\n      \"bookingId\": null\n    }\n  ],\n  \"totalPrice\": 0.0\n}\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/bookings (invalid: id/reservationNumber not null → 400)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 123,\n  \"reservationNumber\": 999,\n  \"tour\": {\n    \"id\": 1\n  },\n  \"persons\": [\n    {\n      \"id\": 1\n    }\n  ],\n  \"reservations\": [\n    {\n      \"startDate\": \"2025-06-04\",\n      \"endDate\": \"2025-06-06\",\n      \"reservationPrice\": 300.0,\n      \"accommodation\": {\n        \"id\": 1\n      }\n    }\n  ]\n}\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/bookings (invalid: accommodation not available → 409)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tour\": {\n    \"id\": 1\n  },\n  \"persons\": [\n    {\n      \"id\": 1\n    }\n  ],\n  \"reservations\": [\n    {\n      \"startDate\": \"2025-06-01\",\n      \"endDate\": \"2025-06-03\",\n      \"reservationPrice\": 300.0,\n      \"accommodation\": {\n        \"id\": 1\n      }\n    }\n  ]\n}\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
