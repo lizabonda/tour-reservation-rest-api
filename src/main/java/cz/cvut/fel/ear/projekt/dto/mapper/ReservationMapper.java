@@ -1,13 +1,11 @@
 package cz.cvut.fel.ear.projekt.dto.mapper;
 
-import cz.cvut.fel.ear.projekt.dto.BookingDto;
 import cz.cvut.fel.ear.projekt.dto.ReservationDto;
-import cz.cvut.fel.ear.projekt.model.Booking;
 import cz.cvut.fel.ear.projekt.model.Reservation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {AccommodationMapper.class})
 public interface ReservationMapper {
     Reservation reservationDtoToReservation(ReservationDto dto);
 

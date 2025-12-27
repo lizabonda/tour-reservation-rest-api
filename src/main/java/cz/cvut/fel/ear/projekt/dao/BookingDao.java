@@ -1,9 +1,7 @@
 package cz.cvut.fel.ear.projekt.dao;
 
-import cz.cvut.fel.ear.projekt.model.Accommodation;
 import cz.cvut.fel.ear.projekt.model.Booking;
 import cz.cvut.fel.ear.projekt.model.Booking_;
-import cz.cvut.fel.ear.projekt.model.Tour;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -36,6 +34,13 @@ public class BookingDao implements GenericDao<Booking> {
     public void save(Booking entity) {
         Objects.requireNonNull(entity);
         em.persist(entity);
+    }
+
+    public int nextReservationNumber() {
+        Number value = (Number) em
+                .createNativeQuery("SELECT NEXT VALUE FOR booking_reservation_number_seq")
+                .getSingleResult();
+        return value.intValue();
     }
 
     @Override

@@ -66,7 +66,7 @@ class BookingDaoTest {
         res.setStartDate(LocalDateTime.now().plusDays(50));
         res.setEndDate(LocalDateTime.now().plusDays(53));
         res.setReservationPrice(300.0);
-        res.setAccomodation(acc);
+        res.setAccommodation(acc);
 
         Booking booking = new Booking();
         booking.setReservationNumber(999);
