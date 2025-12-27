@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @NamedQuery(
@@ -81,6 +82,14 @@ public class Reservation {
 
     public void setBooking(Booking booking) {
         this.booking = booking;
+    }
+
+    public void calculateReservationPrice() {
+        long nights = ChronoUnit.DAYS.between(startDate, endDate);
+        if (nights <= 0) {
+            throw new IllegalArgumentException("Reservation endDate must be after startDate");
+        }
+        setReservationPrice(accommodation.getPricePerNight() * nights);
     }
 
     @Override

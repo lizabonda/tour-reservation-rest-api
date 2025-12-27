@@ -93,7 +93,7 @@ class BookingServiceTest {
                 null,
                 LocalDate.now().plusDays(50),
                 LocalDate.now().plusDays(53),
-                300.0,
+                0.0,
                 new AccommodationDto(
                         accommodation.getId(),
                         null,
@@ -127,7 +127,7 @@ class BookingServiceTest {
         BookingDto dto = new BookingDto(
                 null,
                 null,
-                new TourDto(tour.getId(), null, null, null, 0, 0.0, null),
+                new TourDto(tour.getId(), null, null, null, 0, 0.0),
                 List.of(samplePersonDto()),
                 List.of(sampleReservationDto()),
                 0.0
@@ -149,7 +149,7 @@ class BookingServiceTest {
         BookingDto dto = new BookingDto(
                 null,
                 null,
-                new TourDto(tour.getId(), null, null, null, 0, 0.0, null),
+                new TourDto(tour.getId(), null, null, null, 0, 0.0),
                 List.of(samplePersonDto()),
                 List.of(sampleReservationDto()),
                 0.0

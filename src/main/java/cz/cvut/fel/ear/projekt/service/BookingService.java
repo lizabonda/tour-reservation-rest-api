@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -120,7 +121,7 @@ public class BookingService {
 
     private List<Reservation> createReservations(List<ReservationDto> reservationsDto, Booking booking) {
         final List<Reservation> reservations = new ArrayList<>(reservationsDto.size());
-        for (var reservationDto : reservationsDto) {
+        for (ReservationDto reservationDto : reservationsDto) {
             if (reservationDto == null) {
                 throw new IllegalArgumentException("Reservation must not be null");
             }
@@ -136,16 +137,22 @@ public class BookingService {
             if (reservationDto.accommodation() == null || reservationDto.accommodation().id() == null) {
                 throw new IllegalArgumentException("Reservation must have accommodation.id");
             }
+
+            if (reservationDto.reservationPrice() != 0.0) {
+                throw new IllegalArgumentException("Reservation price must not be provided on create");
+            }
             final Accommodation accommodation = accommodationDao.find(reservationDto.accommodation().id());
             if (accommodation == null) {
                 throw new NotFoundException("Accommodation not found: " + reservationDto.accommodation().id());
             }
 
+            final LocalDateTime startDateTime = reservationDto.startDate().atStartOfDay();
+            final LocalDateTime endDateTime = reservationDto.endDate().atStartOfDay();
             final Reservation reservation = new Reservation();
-            reservation.setStartDate(reservationDto.startDate().atStartOfDay());
-            reservation.setEndDate(reservationDto.endDate().atStartOfDay());
-            reservation.setReservationPrice(reservationDto.reservationPrice());
+            reservation.setStartDate(startDateTime);
+            reservation.setEndDate(endDateTime);
             reservation.setAccommodation(accommodation);
+            reservation.calculateReservationPrice();
             reservation.setBooking(booking);
             reservations.add(reservation);
         }
@@ -157,7 +164,7 @@ public class BookingService {
     // 2) person.id = null -> create new Person using (firstName, lastName, dateOfBirth)
     private List<Person> foundOrCreatePersons(List<PersonDto> personsDto) {
         final List<Person> persons = new ArrayList<>(personsDto.size());
-        for (var personDto : personsDto) {
+        for (PersonDto personDto : personsDto) {
             if (personDto == null) {
                 throw new IllegalArgumentException("Person must not be null");
             }
@@ -191,15 +198,6 @@ public class BookingService {
         return persons;
     }
 
-    public Booking findById(Long id) {
-        Objects.requireNonNull(id);
-        final Booking booking = bookingDao.find(id);
-        if (booking == null) {
-            throw new NotFoundException("Booking not found: " + id);
-        }
-        return booking;
-    }
-
     private void validationForReservation(Booking booking, Reservation r) {
         if (r.getAccommodation() == null) {
             throw new IllegalArgumentException("Reservation must have accommodation");
@@ -219,6 +217,15 @@ public class BookingService {
         if (!intersection.isEmpty()) {
             throw new IllegalStateException("Accommodation is not available for given dates");
         }
+    }
+
+    public Booking findById(Long id) {
+        Objects.requireNonNull(id);
+        final Booking booking = bookingDao.find(id);
+        if (booking == null) {
+            throw new NotFoundException("Booking not found: " + id);
+        }
+        return booking;
     }
 
     public List<BookingDto> getBookingsCreatedBetween(LocalDate fromDate, LocalDate toDate) {
@@ -257,6 +264,7 @@ public class BookingService {
         }
 
         r.setAccommodation(newAccommodation);
+        r.calculateReservationPrice();
         booking.saveTotalPrice();
         bookingDao.save(booking);
         }

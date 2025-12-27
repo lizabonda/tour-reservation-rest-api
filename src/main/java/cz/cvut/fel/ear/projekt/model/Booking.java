@@ -220,7 +220,7 @@ public class Booking {
         }
 
         return String.format("""
-                -- Price breakdown for booking %d --
+                -- Price breakdown for booking %s --
                 Tour price:                  %.2f
                 Accommodation price:         %.2f
                 Base price:                  base = tour + accommodation = %.2f = %.2f + %.2f
@@ -229,7 +229,7 @@ public class Booking {
                 Extra charges (ALL_INCLUSIVE): %.2f
                 Final price:                 total = base - discount + charge
                                             = %.2f - %.2f + %.2f = %.2f
-                """.formatted(
+                """,
                 getId(),
                 tour,
                 acc,
@@ -238,7 +238,7 @@ public class Booking {
                 discountExplain,
                 charge,
                 base, discount, charge, total
-        ));
+        );
     }
 
 
