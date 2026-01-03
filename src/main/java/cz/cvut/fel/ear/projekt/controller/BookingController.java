@@ -4,15 +4,13 @@ import cz.cvut.fel.ear.projekt.dto.BookingDto;
 import cz.cvut.fel.ear.projekt.dto.mapper.BookingMapper;
 import cz.cvut.fel.ear.projekt.model.Booking;
 import cz.cvut.fel.ear.projekt.service.BookingService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -39,5 +37,46 @@ class BookingController {
         return ResponseEntity
                 .created(URI.create("/api/bookings/" + created.getId()))
                 .body(response);
+    }
+
+
+
+    @GetMapping
+    ResponseEntity<List<BookingDto>> getBookingsCreatedBetween(
+            @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
+    ) {
+        List<BookingDto> bookings = bookingService.getBookingsCreatedBetween(from, to);
+        return ResponseEntity.ok(bookings);
+    }
+
+    /**
+     * Update accommodation for an existing reservation.
+     *
+     * Example:
+     * PUT /api/bookings/reservations/5/accommodation/3
+     */
+    @PutMapping("/reservations/{reservationId}/accommodation/{accommodationId}")
+    ResponseEntity<Void> updateReservationAccommodation(
+            @PathVariable Long reservationId,
+            @PathVariable Long accommodationId
+    ) {
+        bookingService.updateBookingAccommodation(reservationId, accommodationId);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Remove all bookings for a given tour.
+     *
+     * Example:
+     * DELETE /api/bookings/by-tour?destination=Greece&startDate=2025-06-01
+     */
+    @DeleteMapping("/by-tour")
+    ResponseEntity<Void> removeBookingsByTour(
+            @RequestParam String destination,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate
+    ) {
+        bookingService.removeBookingByTour(destination, startDate);
+        return ResponseEntity.noContent().build();
     }
 }
