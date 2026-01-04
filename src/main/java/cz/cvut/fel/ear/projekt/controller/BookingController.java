@@ -50,12 +50,7 @@ class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
-    /**
-     * Update accommodation for an existing reservation.
-     *
-     * Example:
-     * PUT /api/bookings/reservations/5/accommodation/3
-     */
+
     @PutMapping("/reservations/{reservationId}/accommodation/{accommodationId}")
     ResponseEntity<Void> updateReservationAccommodation(
             @PathVariable Long reservationId,
@@ -65,12 +60,7 @@ class BookingController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Remove all bookings for a given tour.
-     *
-     * Example:
-     * DELETE /api/bookings/by-tour?destination=Greece&startDate=2025-06-01
-     */
+    
     @DeleteMapping("/by-tour")
     ResponseEntity<Void> removeBookingsByTour(
             @RequestParam String destination,

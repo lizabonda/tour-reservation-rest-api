@@ -42,7 +42,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"tour\": {\r\n    \"id\": 1\r\n  },\r\n  \"persons\": [\r\n    {\r\n      \"id\": 1\r\n    }\r\n  ],\r\n  \"reservations\": [\r\n    {\r\n      \"startDate\": \"2025-06-04\",\r\n      \"endDate\": \"2025-06-06\",\r\n      \"accommodation\": {\r\n        \"id\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
+							"raw": "{\r\n    \"tour\": {\r\n        \"id\": 1\r\n    },\r\n    \"persons\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ],\r\n    \"reservations\": [\r\n        {\r\n            \"startDate\": \"2026-01-15\",\r\n            \"endDate\": \"2026-01-17\",\r\n            \"accommodation\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -119,7 +119,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings?from=2025-01-01&to=2025-12-31",
+							"raw": "{{baseUrl}}/api/bookings?from=2026-01-01&to=2026-12-31",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -130,11 +130,11 @@
 							"query": [
 								{
 									"key": "from",
-									"value": "2025-01-01"
+									"value": "2026-01-01"
 								},
 								{
 									"key": "to",
-									"value": "2025-12-31"
+									"value": "2026-12-31"
 								}
 							]
 						},
@@ -277,7 +277,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings/by-tour?destination=Greece&startDate=2025-06-01",
+							"raw": "{{baseUrl}}/api/bookings/by-tour?destination=Greece&startDate=2026-01-15",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -293,7 +293,7 @@
 								},
 								{
 									"key": "startDate",
-									"value": "2025-06-01"
+									"value": "2026-01-15"
 								}
 							]
 						},
@@ -322,7 +322,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings?from=2025-01-01&to=2025-12-31",
+							"raw": "{{baseUrl}}/api/bookings?from=2026-01-01&to=2026-12-31",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -333,11 +333,11 @@
 							"query": [
 								{
 									"key": "from",
-									"value": "2025-01-01"
+									"value": "2026-01-01"
 								},
 								{
 									"key": "to",
-									"value": "2025-12-31"
+									"value": "2026-12-31"
 								}
 							]
 						},
@@ -438,7 +438,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"tour\": {\r\n    \"id\": 1\r\n  },\r\n  \"persons\": [\r\n    {\r\n      \"id\": 1\r\n    }\r\n  ],\r\n  \"reservations\": [\r\n    {\r\n      \"startDate\": \"2025-06-01\",\r\n      \"endDate\": \"2025-06-03\",\r\n      \"accommodation\": {\r\n        \"id\": 1\r\n      }\r\n    }\r\n  ]\r\n}\r\n",
+							"raw": "{\r\n    \"tour\": {\r\n        \"id\": 1\r\n    },\r\n    \"persons\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ],\r\n    \"reservations\": [\r\n        {\r\n            \"startDate\": \"2026-01-15\",\r\n            \"endDate\": \"2026-01-17\",\r\n            \"accommodation\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -492,7 +492,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"tour\": { \"id\": 1 },\r\n  \"persons\": [{ \"id\": 1 }],\r\n  \"reservations\": [\r\n    {\r\n      \"startDate\": \"2025-06-04\",\r\n      \"endDate\": \"2025-06-06\",\r\n      \"reservationPrice\": 999,\r\n      \"accommodation\": { \"id\": 1 }\r\n    }\r\n  ]\r\n}",
+							"raw": "{\r\n    \"tour\": {\r\n        \"id\": 1\r\n    },\r\n    \"persons\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ],\r\n    \"reservations\": [\r\n        {\r\n            \"startDate\": \"2026-01-15\",\r\n            \"endDate\": \"2026-01-17\",\r\n            \"reservationPrice\": 999,\r\n            \"accommodation\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -541,7 +541,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"tour\": {\r\n    \"id\": 1\r\n  },\r\n  \"persons\": [\r\n    {\r\n      \"id\": 1\r\n    }\r\n  ],\r\n  \"reservations\": [\r\n    {\r\n      \"startDate\": \"2025-06-04\",\r\n      \"endDate\": \"2025-06-06\",\r\n      \"accommodation\": {\r\n        \"id\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
+							"raw": "{\r\n    \"tour\": {\r\n        \"id\": 1\r\n    },\r\n    \"persons\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ],\r\n    \"reservations\": [\r\n        {\r\n            \"startDate\": \"2026-01-15\",\r\n            \"endDate\": \"2026-01-17\",\r\n            \"accommodation\": {\r\n                \"id\": 1\r\n            }\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -594,7 +594,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings/by-tour?destination=Greece&startDate=2025-06-01",
+							"raw": "{{baseUrl}}/api/bookings/by-tour?destination=Greece&startDate=2026-01-15",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -610,7 +610,7 @@
 								},
 								{
 									"key": "startDate",
-									"value": "2025-06-01"
+									"value": "2026-01-15"
 								}
 							]
 						},

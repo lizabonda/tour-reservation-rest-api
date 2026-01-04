@@ -12,7 +12,7 @@ import java.util.Locale;
 @Entity
 public class Booking {
     private static final int EARLY_DAYS = 45;
-    private static final int LASTMINUTE_DAYS = 3;
+    private static final int LASTMINUTE_DAYS = 14;
     private static final double LASTMINUTE_DAYS_DISCOUNT = 0.15;
     private static final double EARLY_DAYS_DISCOUNT = 0.1;
     private static final double ALL_INCLUSIVE_PERCENT = 0.15;

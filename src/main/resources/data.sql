@@ -1,8 +1,11 @@
 INSERT INTO accommodation (id, name, city, address, stars, room_type, capacity, meal_plan, price_per_night)
 VALUES (1, 'Demo Hotel', 'Prague', 'Demo Street 123', 4, 'Single', 2, 'ALL_INCLUSIVE', 100.0);
+INSERT INTO accommodation (id, name, city, address, stars, room_type, capacity, meal_plan, price_per_night)
+VALUES (2, 'Demo Resort', 'Prague', 'Resort Avenue 42', 5, 'Double', 2, 'ALL_INCLUSIVE', 150.0);
 
 INSERT INTO tour (id, title, description, destination, start_date, end_date, capacity, price)
-VALUES (1, 'Demo Greece Tour', 'Demo tour for testing', 'Greece', '2025-06-01', '2025-06-08', 15, 500.0);
+VALUES (1, 'Demo Greece Tour', 'Demo tour for testing', 'Greece', '2026-01-15', '2026-01-22', 15, 500.0);
+INSERT INTO tour_accomodation (tour_id, accomodation_id) VALUES (1, 2);
 
 INSERT INTO tour_accomodation (tour_id, accomodation_id) VALUES (1, 1);
 
@@ -13,10 +16,10 @@ INSERT INTO users (id, username, password, phone_number, email, role)
 VALUES (1, 'alice', 'password', '123456789', 'alice@example.com', 'CUSTOMER');
 
 INSERT INTO booking (id, reservation_number, total_price, created_at, tour_id)
-VALUES (1, 1001, 800.0, '2025-05-01', 1);
+VALUES (1, 1001, 800.0, '2026-01-01', 1);
 
 INSERT INTO reservation (id, start_date, end_date, reservation_price, accommodation_id, booking_id)
-VALUES (1, '2025-06-01T12:00:00', '2025-06-03T12:00:00', 300.0, 1, 1);
+VALUES (1, '2026-01-18T12:00:00', '2026-01-20T12:00:00', 300.0, 1, 1);
 
 INSERT INTO booking_person (booking_id, person_id) VALUES (1, 1);
 

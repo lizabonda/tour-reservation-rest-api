@@ -46,7 +46,7 @@ class BookingTest {
 
         assertTrue(report.contains("Last-minute discount"),"Report should mention last-minute discount");
         assertTrue(report.contains("0.15"),"Discount percentage should be 0.15 for last-minute booking");
-        assertTrue(report.contains("<= 3"),"Report should compare days with LASTMINUTE_DAYS value");
+        assertTrue(report.contains("<= 14"),"Report should compare days with LASTMINUTE_DAYS value");
     }
 
     @Test
@@ -55,7 +55,7 @@ class BookingTest {
         String report = booking.priceReport();
 
         assertTrue(report.contains("No discount applied"),"Report should mention that no discount is applied");
-        assertTrue(report.contains("between 3 and 45"),"Report should show the range for no discount");
+        assertTrue(report.contains("between 14 and 45"),"Report should show the range for no discount");
         assertTrue(report.contains("discount = 0.00"),"Report should show zero discount");
     }
 
