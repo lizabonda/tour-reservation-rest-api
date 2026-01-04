@@ -123,4 +123,19 @@ public class Accommodation {
                 ", pricePerNight=" + pricePerNight +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Accommodation)) return false;
+        Accommodation other = (Accommodation) o;
+        return id != null && id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+
 }
